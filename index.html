@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px; /* Gap between buttons */
+            gap: 40px; /* Gap between buttons */
         }
         .no-button {
             position: relative;
@@ -32,45 +32,65 @@
 </head>
 <body>
     <div class="greetings">
-        <span>D</span>
-        <span>O</span>
-        <span>Y</span>
-        <span>O</span>
-        <span>U</span>
-        <span>W</span>
-        <span>A</span>
-        <span>N</span>
-        <span>T</span>
-        <span>A</span>
-        <span>F</span>
-        <span>L</span>
-        <span>O</span>
-        <span>W</span>
-        <span>E</span>
-        <span>R</span>
-        <span>?</span>
-        <span>.</span>
-    </div>
+    <span style="--i:1">KATHERINE,</span>
+    <span style="--i:2">DO</span>
+    <span style="--i:3">YOU</span>
+    <span style="--i:4">WANT</span>
+    <span style="--i:5">A</span>
+    <span style="--i:6">FLOWER?</span>
+</div>
     <div class="description">
         <span>Click the button below</span>
     </div>
     <div class="button">
-        <button>
+    <div class="btn-wrap">
+        <button class="yes-btn">
             <a href="flower.html">Yes</a>
         </button>
-        <button class="no-button" onclick="moveNoButton()">
+    </div>
+
+    <div class="btn-wrap">
+        <button class="no-button">
             <a>No</a>
         </button>
     </div>
+</div>
     
     <script>
-        function moveNoButton() {
-            const noButton = document.querySelector('.no-button');
-            const randomX = Math.random() * 200 - 25; // Random value between -15 and 15
-            const randomY = Math.random() * 200 - 25; // Random value between -15 and 15
-            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
-        }
-    </script>
+    const noButton = document.querySelector('.no-button');
+
+    // Fungsi kabur super agresif
+    function moveNoButton() {
+        const maxX = window.innerWidth - noButton.offsetWidth;
+        const maxY = window.innerHeight - noButton.offsetHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        noButton.style.position = "absolute";
+        noButton.style.left = randomX + "px";
+        noButton.style.top = randomY + "px";
+
+        // efek lompat cepat
+        noButton.style.transition = "all 0.2s ease";
+    }
+
+    // Biar dia kabur sebelum diklik (hover)
+    noButton.addEventListener("mouseenter", moveNoButton);
+
+    // Kalau berhasil diklik → lempar jauh + muter + hilang
+    noButton.addEventListener("click", () => {
+        noButton.style.transition = "all 0.6s ease";
+        noButton.style.transform = "translate(-1000px, -1000px) rotate(720deg) scale(0.2)";
+        noButton.style.opacity = "0";
+
+        setTimeout(() => {
+            moveNoButton();
+            noButton.style.transform = "scale(1)";
+            noButton.style.opacity = "1";
+        }, 600);
+    });
+</script>
 
     <div class="footer">
         <span>&copy;JosuaLimbu</span>
